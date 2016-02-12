@@ -9,14 +9,14 @@ with open(path.join(here, 'DESCRIPTION.rst')) as f:
     long_description = f.read()
 
 setup(
-    name='projectoxford',
+    name='oxford',
 
     # Versions should comply with PEP440.  For a discussion on single-sourcing
     # the version across setup.py and the project code, see
     # http://packaging.python.org/en/latest/tutorial.html#version
-    version='0.3.0',
+    version='1.0.0',
 
-    description='This project extends the Project Oxford API surface to support Python.',
+    description='This project implements a client for the Project Oxford API\'s.',
     long_description=long_description,
 
     # The project's main homepage.
@@ -24,7 +24,7 @@ setup(
     download_url='https://github.com/scsouthw/project-oxford-python',
 
     # Author details
-    author='Microsoft',
+    author='Ivan R. Judson',
     author_email='ivan.judson@microsoft.com',
 
     # Choose your license
@@ -36,7 +36,7 @@ setup(
         #   3 - Alpha
         #   4 - Beta
         #   5 - Production/Stable
-        'Development Status :: 3 - Alpha',
+        'Development Status :: 4 - Beta',
 
         # Indicate who your project is intended for
         'Intended Audience :: Developers',
@@ -61,5 +61,5 @@ setup(
     # simple. Or you can use find_packages().
     packages=find_packages(exclude=['contrib', 'docs', 'tests*']),
 
-    test_suite='tests.projectoxford_tests'
+    test_suite='tests.oxford_tests'
 )

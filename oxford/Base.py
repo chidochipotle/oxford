@@ -33,7 +33,7 @@ class Base(object):
         if response.status_code == 429:  # throttling response code
             if retries <= retryCount:
                 delay = int(response.headers['retry-after'])
-                print('The projectoxford API was throttled. Retrying after {0} seconds'.format(str(delay)))
+                print('The oxford API was throttled. Retrying after {0} seconds'.format(str(delay)))
                 time.sleep(delay)
                 return self._invoke(method, url, json=json, data=data, headers=headers, params=params, retries=retries + 1)
             else:

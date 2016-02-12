@@ -8,7 +8,7 @@ rootDirectory = os.path.join(os.path.dirname(os.path.realpath(__file__)), '..')
 if rootDirectory not in sys.path:
     sys.path.append(rootDirectory)
 
-from projectoxford.Client import Client
+from oxford.Client import Client
 
 class TestClient(unittest.TestCase):
     """Tests the project oxford API client"""

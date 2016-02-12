@@ -8,7 +8,7 @@ import argparse
 import numpy as np
 import cv2
 
-from projectoxford import Client
+from oxford import Client
 
 parser = argparse.ArgumentParser()
 parser.add_argument('--image', help='Image to interact with.')

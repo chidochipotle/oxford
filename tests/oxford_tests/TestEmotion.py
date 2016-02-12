@@ -10,8 +10,8 @@ if rootDirectory not in sys.path:
     sys.path.append(os.path.join(rootDirectory, '..'))
 
 from test import test_support
-from projectoxford.Client import Client
-from projectoxford.Emotion import Emotion
+from oxford.Client import Client
+from oxford.Emotion import Emotion
 
 
 class TestEmotion(unittest.TestCase):

@@ -1,8 +1,8 @@
 ## Project Oxford for Python
-[![Build Status](https://travis-ci.org/irjudson/project-oxford-python.svg?branch=master)](https://travis-ci.org/irjudson/project-oxford-python)
-[![PyPI version](https://badge.fury.io/py/projectoxford.svg)](http://badge.fury.io/py/projectoxford)
+[![Build Status](https://travis-ci.org/irjudson/oxford.svg?branch=master)](https://travis-ci.org/irjudson/oxford)
+[![PyPI version](https://badge.fury.io/py/oxford.svg)](http://badge.fury.io/py/oxford)
 
-This package contains a set of intelligent APIs understanding images: It can detect and analyze people's faces, their age, gender, and similarity. It can identify people based on a set of images. It can understand what is displayed in a picture and crop it according to where the important features are. It can tell you whether an image contains adult content, what the main colors are, and which of your images belong in a group. If your image features text, it will tell you the language and return the text as a string. It's basically magic. For more details on the Project Oxford API, please visit [projectoxford.ai](projectoxford.ai/demo/face#detection).
+This package contains a client for a set of intelligent APIs understanding images: It can detect and analyze people's faces, their age, gender, and similarity. It can identify people based on a set of images. It can understand what is displayed in a picture and crop it according to where the important features are. It can tell you whether an image contains adult content, what the main colors are, and which of your images belong in a group. If your image features text, it will tell you the language and return the text as a string. It's basically magic. For more details on the Project Oxford API, please visit [projectoxford.ai](projectoxford.ai/demo/face#detection).
 
 This python module implements all APIs available in the Face and Vision APIs of Project Oxford.
 
@@ -13,7 +13,7 @@ This python module implements all APIs available in the Face and Vision APIs of 
 To install the latest release you can use [pip](http://www.pip-installer.org/).
 
 ```
-$ pip install projectoxford
+$ pip install oxford
 ```
 
 ## Usage ##
@@ -22,7 +22,7 @@ $ pip install projectoxford
 
 **Initialize a client**
 ```python
-from projectoxford import Client
+from oxford import Client
 client = Client('<api_key>')
 ```
 

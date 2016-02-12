@@ -6,7 +6,7 @@ sys.path.append(dirname(dirname(abspath(__file__))))
 
 import argparse
 
-from projectoxford import Client
+from oxford import Client
 
 parser = argparse.ArgumentParser()
 parser.add_argument('--image', help='Image to interact with.')
