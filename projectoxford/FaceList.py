@@ -117,7 +117,6 @@ class FaceList(Base):
         uri = _faceListUrl
         return self._invoke('get', uri, headers={'Ocp-Apim-Subscription-Key': self.key})
 
-        
     def update(self, faceListId, name, userData=None):
         """Updates a face for a person.
 

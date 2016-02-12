@@ -47,7 +47,7 @@ class Face(Base):
         params = {
             'returnFaceLandmarks': 'true' if 'returnFaceLandmarks' in options else 'false'
         }
-        
+
         if 'returnFaceAttributes' in options:
             params['returnFaceAttributes'] = options['returnFaceAttributes']
 
@@ -66,7 +66,7 @@ class Face(Base):
 
         if candidateFaces and candidateFaceListId:
             raise Exception("You can't provide both a face list id and faces to find similar.")
-            
+
         body = {
             'faceId': sourceFace,
             'maxNumOfCandidatesReturned': maxNumOfCandidatesReturned
@@ -74,10 +74,10 @@ class Face(Base):
 
         if candidateFaces:
             body['faceIds'] = candidateFaces
-            
+
         if candidateFaceListId:
             body['faceListId'] = candidateFaceListId
-            
+
         return self._invoke('post', _similarUrl, json=body, headers={'Ocp-Apim-Subscription-Key': self.key})
 
     def grouping(self, faceIds):

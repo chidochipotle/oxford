@@ -35,15 +35,15 @@ class Person(Base):
 
         # build params query string
         params = {}
-        
+
         if 'userData' in options:
             params['userData'] = options['userData']
             del options['userData']
-            
+
         if 'targetFace' in options:
             params['targetFace'] = options['targetFace']
             del options['targetFace']
-        
+
         return Base._postWithOptions(self, _personUrl + '/' + personGroupId + '/persons/' + personId + '/persistedFaces', options, params)
 
     def create(self, personGroupId, name, userData=None):
@@ -99,7 +99,7 @@ class Person(Base):
 
         uri = _personUrl + '/' + personGroupId + '/persons/' + personId + '/persistedFaces/' + faceId
         return self._invoke('delete', uri, headers={'Ocp-Apim-Subscription-Key': self.key})
-        
+
     def get(self, personGroupId, personId):
         """Gets an existing person from a person group.
 
@@ -113,7 +113,7 @@ class Person(Base):
 
         uri = _personUrl + '/' + personGroupId + '/persons/' + personId
         return self._invoke('get', uri, headers={'Ocp-Apim-Subscription-Key': self.key})
- 
+
     def getFace(self, personGroupId, personId, faceId):
         """Get a face for a person.
 
@@ -180,6 +180,6 @@ class Person(Base):
         """
 
         body = {} if userData is None else {'userData': userData}
-        
+
         uri = _personUrl + '/' + personGroupId + '/persons/' + personId + '/persistedFaces/' + persistedFaceId
         return self._invoke('patch', uri, json=body, headers={'Ocp-Apim-Subscription-Key': self.key})

@@ -91,7 +91,6 @@ class PersonGroup(Base):
             """
             return self._invoke('get', _personGroupUrl, headers={'Ocp-Apim-Subscription-Key': self.key})
 
-
     def trainingStart(self, personGroupId):
         """Starts a person group training.
         Training is a necessary preparation process of a person group before identification.
@@ -144,7 +143,7 @@ class PersonGroup(Base):
         """
         timeout = 0
         status = self.trainingStart(personGroupId)
-          
+
         while status is None or status['status'] not in ['succeeded', 'failed']:
             time.sleep(1)
             status = self.trainingStatus(personGroupId)
