@@ -5,7 +5,6 @@ from .Emotion import Emotion
 
 class Client(object):
     """Client for using project oxford APIs"""
-
     @staticmethod
     def face(key):
         """The face API interface.

@@ -35,12 +35,12 @@ class TestPerson(unittest.TestCase):
 
     def test_person_create_update_get_delete(self):
         # create
-        result = self.client.person.create(self.personGroupId, self.knownFaceIds, 'billg', 'test-person')
+        result = self.client.person.create(self.personGroupId, 'billg', 'test-person')
         personId = result['personId']
         self.assertIsInstance(personId, object, 'person id was returned')
 
         # update
-        result = self.client.person.update(self.personGroupId, personId, self.knownFaceIds, 'bill gates', 'test-person')
+        result = self.client.person.update(self.personGroupId, personId, 'bill gates', 'test-person')
         self.assertIsNone(result, 'person was updated')
 
         # get
@@ -54,30 +54,30 @@ class TestPerson(unittest.TestCase):
 
     def test_person_face_add_update_delete(self):
         # create
-        result = self.client.person.create(self.personGroupId, [self.knownFaceIds[0]], 'billg', 'test-person')
+        result = self.client.person.create(self.personGroupId, 'billg', 'test-person')
         personId = result['personId']
         self.assertIsInstance(personId, object, 'create succeeded')
 
         # add a new face ID
-        self.client.person.addFace(self.personGroupId, personId, self.knownFaceIds[1])
+        self.client.person.addFace(self.personGroupId, personId, {'path': os.path.join(os.path.join(rootDirectory, 'tests', 'images'), 'face1.jpg')})
         self.assertTrue(True, 'add succeeded')
 
+        # update a face ID
+        self.client.person.updateFace(self.personGroupId,self.knownFaceIds[0], 'billg2', 'test-bill')
+        personId = result['personId']
+        self.assertIsInstance(personId, object, 'update succeeded')
+        
         # delete the original face ID
         self.client.person.deleteFace(self.personGroupId, personId, self.knownFaceIds[0])
         self.assertTrue(True, 'delete succeeded')
-
-        # verify expected face ID
-        self.assertIsNone(self.client.person.getFace(self.personGroupId, personId, self.knownFaceIds[0]))
-        face = self.client.person.getFace(self.personGroupId, personId, self.knownFaceIds[1])
-        self.assertEqual(face['faceId'], self.knownFaceIds[1])
-
+        
         # clean up
         self.client.person.delete(self.personGroupId, personId)
 
     def test_person_list(self):
         # create some people
-        self.client.person.create(self.personGroupId, [self.knownFaceIds[0]], 'billg1', 'test-person')
-        self.client.person.create(self.personGroupId, [self.knownFaceIds[1]], 'billg2', 'test-person')
+        self.client.person.create(self.personGroupId, 'billg1', 'test-person')
+        self.client.person.create(self.personGroupId, 'billg2', 'test-person')
         
         # list them
         listResult = self.client.person.list(self.personGroupId)
@@ -86,12 +86,3 @@ class TestPerson(unittest.TestCase):
         # remove them
         for person in listResult:
             self.client.person.delete(self.personGroupId, person['personId'])
-
-    def test_person_create_or_update(self):
-        self.client.person.createOrUpdate(self.personGroupId, [self.knownFaceIds[0]], 'billg1', 'test-person')
-        result = self.client.person.createOrUpdate(self.personGroupId, [self.knownFaceIds[1]], 'billg1', 'test-person-updated')
-        result = self.client.person.get(self.personGroupId, result['personId'])
-
-        self.assertEqual(result['userData'], 'test-person-updated')
-
-        self.client.person.delete(self.personGroupId, result['personId'])

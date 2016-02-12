@@ -44,43 +44,6 @@ class FaceList(Base):
 
         return Base._postWithOptions(self, uri, options, params)
 
-    def deleteFace(self, faceListId, persistedFaceId):
-        """Deletes a face from a person.
-
-        Args:
-            faceListId (str). The target person's person group.
-            persistedFaceId (str). The target person that the face is removed from.
-
-        Returns:
-            object. The resulting JSON
-        """
-
-        uri = _faceListUrl + '/' + faceListId + '/persistedFaces/' + persistedFaceId
-        return self._invoke('delete', uri, headers={'Ocp-Apim-Subscription-Key': self.key})
-
-    def update(self, faceListId, name, userData=None):
-        """Updates a face for a person.
-
-        Args:
-            faceListId (str). The target person's person group.
-            name (str). Target face list display name. The maximum length is 128.
-            userData (str). Optional fields for user-provided data attached to a person. Size limit is 16KB.
-
-
-        Returns:
-            object. The resulting JSON
-        """
-
-        body = {
-            'name': name
-        }
-
-        if userData is not None:
-            body['userData'] = userData
-
-        uri = _faceListUrl + '/' + faceListId
-        return self._invoke('patch', uri, json=body, headers={'Ocp-Apim-Subscription-Key': self.key})
-
     def create(self, faceListId, name, userData=None):
         """Creates a new facelist.
         The number of faces has a subscription limit. Free subscription amount is 1000 faces.
@@ -103,6 +66,20 @@ class FaceList(Base):
                             _faceListUrl + '/' + faceListId,
                             json=body,
                             headers={'Ocp-Apim-Subscription-Key': self.key})
+
+    def deleteFace(self, faceListId, persistedFaceId):
+        """Deletes a face from a person.
+
+        Args:
+            faceListId (str). The target person's person group.
+            persistedFaceId (str). The target person that the face is removed from.
+
+        Returns:
+            object. The resulting JSON
+        """
+
+        uri = _faceListUrl + '/' + faceListId + '/persistedFaces/' + persistedFaceId
+        return self._invoke('delete', uri, headers={'Ocp-Apim-Subscription-Key': self.key})
 
     def delete(self, faceListId):
         """Deletes an existing Face List.
@@ -139,3 +116,27 @@ class FaceList(Base):
 
         uri = _faceListUrl
         return self._invoke('get', uri, headers={'Ocp-Apim-Subscription-Key': self.key})
+
+        
+    def update(self, faceListId, name, userData=None):
+        """Updates a face for a person.
+
+        Args:
+            faceListId (str). The target person's person group.
+            name (str). Target face list display name. The maximum length is 128.
+            userData (str). Optional fields for user-provided data attached to a person. Size limit is 16KB.
+
+
+        Returns:
+            object. The resulting JSON
+        """
+
+        body = {
+            'name': name
+        }
+
+        if userData is not None:
+            body['userData'] = userData
+
+        uri = _faceListUrl + '/' + faceListId
+        return self._invoke('patch', uri, json=body, headers={'Ocp-Apim-Subscription-Key': self.key})

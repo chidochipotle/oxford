@@ -2,6 +2,8 @@ import copy
 import os
 import sys
 import unittest
+import time
+import uuid
 
 rootDirectory = os.path.dirname(os.path.realpath('__file__'))
 if rootDirectory not in sys.path:
@@ -27,11 +29,10 @@ class TestFace(unittest.TestCase):
 
         # set common detect options
         cls.detectOptions = {
-            'analyzesFaceLandmarks': True,
-            'analyzesAge': True,
-            'analyzesGender': True,
-            'analyzesHeadPose': True
+            'returnFaceLandmarks': True,
+            'returnFaceAttributes': 'age,gender,headPose,smile,facialHair'
         }
+        
 
     #
     # test the detect API
@@ -43,10 +44,10 @@ class TestFace(unittest.TestCase):
         self.assertIsInstance(faceIdResult['faceRectangle'], object, 'faceRectangle is returned')
         self.assertIsInstance(faceIdResult['faceLandmarks'], object, 'faceLandmarks are returned')
         
-        attributes = faceIdResult['attributes']
+        attributes = faceIdResult['faceAttributes']
         self.assertIsInstance(attributes, object, 'attributes are returned')
         self.assertIsInstance(attributes['gender'], object, 'gender is returned')
-        self.assertIsInstance(attributes['age'], int, 'age is returned')
+        self.assertIsInstance(attributes['age'], float, 'age is returned')
 
     def test_face_detect_url(self):
         options = copy.copy(self.detectOptions)
@@ -78,6 +79,11 @@ class TestFace(unittest.TestCase):
         self.assertIsInstance(similarResult, list, 'similar result is returned')
         self.assertEqual(self.knownFaceIds[1], similarResult[0]['faceId'], 'expected similar face is returned')
 
+    # def test_face_similar(self):
+    #     similarResult = self.client.similar(self.knownFaceIds[0], [self.knownFaceIds[1]])
+    #     self.assertIsInstance(similarResult, list, 'similar result is returned')
+    #     self.assertEqual(self.knownFaceIds[1], similarResult[0]['faceId'], 'expected similar face is returned')
+    
     #
     # test the grouping API
     #
@@ -107,13 +113,26 @@ class TestFace(unittest.TestCase):
     # test the identify API
     #
     def test_face_identify(self):
-        self.client.personGroup.createOrUpdate('testgroup', 'name')
-        faceId = self.client.detect({'path': os.path.join(self.localFilePrefix, 'face1.jpg')})[0]['faceId']
-        personId = self.client.person.createOrUpdate('testgroup', [faceId], 'billG')['personId']
-        self.client.personGroup.trainAndPollForCompletion('testgroup')
+        fpath = os.path.join(self.localFilePrefix, 'face1.jpg')
+        group_id = 'testgroup'
+        group_name = 'testgroup'
+        try:
+            self.client.personGroup.create(group_id, group_name)
+        except Exception as e:
+            if "PersonGroupExists" not in e: 
+                self.assertRaises(Exception, "Error creating persongroup", {})
+        faceId = self.client.detect({'path': fpath})[0]['faceId']
+        person_id = self.client.person.create(group_id, 'billG')['personId']
+        faceId = self.client.person.addFace(group_id, person_id, {'path':fpath})
+        status = self.client.personGroup.trainingStart(group_id)
+        while status is None or status['status'] not in ['succeeded', 'failed']:
+            time.sleep(1)
+            status = self.client.personGroup.trainingStatus(group_id)
+        if status and status['status'] == 'failed':
+            self.client.personGroup.delete(group_id)
+            self.assertRaises(Exception, "Failed to train group.", {})
         faceId2 = self.client.detect({'path': os.path.join(self.localFilePrefix, 'face2.jpg')})[0]['faceId']
-        identifyResult = self.client.identify('testgroup', [faceId2])
-
+        identifyResult = self.client.identify(group_id, [faceId2])
         self.assertIsInstance(identifyResult, object, 'identify result is returned')
-        self.assertEqual(identifyResult[0]['candidates'][0]['personId'], personId)
-        self.client.personGroup.delete('testgroup')
+        self.assertEqual(identifyResult[0]['candidates'][0]['personId'], person_id)
+        self.client.personGroup.delete(group_id)

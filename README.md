@@ -41,8 +41,6 @@ billAndMelinda = 'https://upload.wikimedia.org/wikipedia/commons/2/28/Bill_og_Me
 
 # get a face ID and create and train a person group with a person
 faceId = client.face.detect({'url': bill})[0]['faceId']
-client.face.personGroup.createOrUpdate(personGroup, 'my person group')
-client.face.person.createOrUpdate(personGroup, [faceId], 'bill gates')
 client.face.personGroup.trainAndPollForCompletion(personGroup)
 
 # detect faces in a second photo

@@ -3,11 +3,11 @@ from .Person import Person
 from .PersonGroup import PersonGroup
 from .FaceList import FaceList
 
-_detectUrl = 'https://api.projectoxford.ai/face/v0/detections'
-_similarUrl = 'https://api.projectoxford.ai/face/v0/findsimilars'
-_groupingUrl = 'https://api.projectoxford.ai/face/v0/groupings'
-_identifyUrl = 'https://api.projectoxford.ai/face/v0/identifications'
-_verifyUrl = 'https://api.projectoxford.ai/face/v0/verifications'
+_detectUrl = 'https://api.projectoxford.ai/face/v1.0/detect'
+_similarUrl = 'https://api.projectoxford.ai/face/v1.0/findsimilars'
+_groupingUrl = 'https://api.projectoxford.ai/face/v1.0/group'
+_identifyUrl = 'https://api.projectoxford.ai/face/v1.0/identify'
+_verifyUrl = 'https://api.projectoxford.ai/face/v1.0/verify'
 
 
 class Face(Base):
@@ -36,10 +36,8 @@ class Face(Base):
             options.url (str). The URL to image to be used
             options.path (str). The Path to image to be used
             options.stream (stream). The stream of the image to be used
-            options.analyzesFaceLandmarks (boolean). The Analyze face landmarks?
-            options.analyzesAge (boolean). The Analyze age?
-            options.analyzesGender (boolean). The Analyze gender?
-            options.analyzesHeadPose (boolean). The Analyze headpose?
+            options.returnFaceLandmarks (boolean). The Analyze face landmarks?
+            options.returnFaceAttributes (string). The attributes to return.
 
         Returns:
             object. The resulting JSON
@@ -47,30 +45,39 @@ class Face(Base):
 
         # build params query string
         params = {
-            'analyzesFaceLandmarks': 'true' if 'analyzesFaceLandmarks' in options else 'false',
-            'analyzesAge': 'true' if 'analyzesAge' in options else 'false',
-            'analyzesGender': 'true' if 'analyzesGender' in options else 'false',
-            'analyzesHeadPose': 'true' if 'analyzesHeadPose' in options else 'false'
+            'returnFaceLandmarks': 'true' if 'returnFaceLandmarks' in options else 'false'
         }
+        
+        if 'returnFaceAttributes' in options:
+            params['returnFaceAttributes'] = options['returnFaceAttributes']
 
         return Base._postWithOptions(self, _detectUrl, options, params)
 
-    def similar(self, sourceFace, candidateFaces):
+    def similar(self, sourceFace, candidateFaces=None, candidateFaceListId=None, maxNumOfCandidatesReturned=20):
         """Detect similar faces using faceIds (as returned from the detect API)
 
         Args:
             sourceFace (str). The source face
-            candidateFaces (str[]). The source face
+            candidateFaces (str[]). The candidate faces
 
         Returns:
             object. The resulting JSON
         """
 
+        if candidateFaces and candidateFaceListId:
+            raise Exception("You can't provide both a face list id and faces to find similar.")
+            
         body = {
             'faceId': sourceFace,
-            'faceIds': candidateFaces
+            'maxNumOfCandidatesReturned': maxNumOfCandidatesReturned
         }
 
+        if candidateFaces:
+            body['faceIds'] = candidateFaces
+            
+        if candidateFaceListId:
+            body['faceListId'] = candidateFaceListId
+            
         return self._invoke('post', _similarUrl, json=body, headers={'Ocp-Apim-Subscription-Key': self.key})
 
     def grouping(self, faceIds):

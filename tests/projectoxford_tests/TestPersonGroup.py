@@ -2,6 +2,7 @@ import os
 import sys
 import unittest
 import uuid
+import time
 
 rootDirectory = os.path.dirname(os.path.realpath('__file__'))
 if rootDirectory not in sys.path:
@@ -61,7 +62,10 @@ class TestPersonGroup(unittest.TestCase):
     def test_person_group_training(self):
         personGroupId = str(uuid.uuid4())
         self.client.personGroup.create(personGroupId, 'python-test-group', 'test-data')
-        result = self.client.personGroup.trainingStart(personGroupId)
+        self.client.personGroup.trainingStart(personGroupId)
+        result = self.client.personGroup.trainingStatus(personGroupId)
+        while result is None:
+            result = self.client.personGroup.trainingStatus(personGroupId)
         self.assertEqual(result['status'], 'running')
 
         countDown = 10
@@ -70,17 +74,6 @@ class TestPersonGroup(unittest.TestCase):
             countdown = countDown - 1
 
         self.assertNotEqual(result['status'], 'running')
-        self.client.personGroup.delete(personGroupId)
-
-    def test_person_group_create_or_update(self):
-        personGroupId = str(uuid.uuid4())
-        self.client.personGroup.createOrUpdate(personGroupId, 'name1')
-        result = self.client.personGroup.createOrUpdate(personGroupId, 'name2', 'user-data')
-        result = self.client.personGroup.get(personGroupId)
-
-        self.assertEqual(result['name'], 'name2')
-        self.assertEqual(result['userData'], 'user-data')
-
         self.client.personGroup.delete(personGroupId)
 
     def test_person_group_train_and_poll(self):

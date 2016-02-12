@@ -28,7 +28,6 @@ class Base(object):
             :param params: (optional) Dictionary or bytes to be sent in the query string for the :class:`Request`.
             :param retries: The number of times this call has been retried.
         """
-
         response = requests.request(method, url, json=json, data=data, headers=headers, params=params)
 
         if response.status_code == 429:  # throttling response code
@@ -39,7 +38,7 @@ class Base(object):
                 return self._invoke(method, url, json=json, data=data, headers=headers, params=params, retries=retries + 1)
             else:
                 raise Exception('retry count ({0}) exceeded: {1}'.format(str(retryCount), response.text))
-        elif response.status_code == 200 or response.status_code == 201:
+        elif response.status_code in [200, 201, 202]:
             result = response  # return the raw response if an unexpected content type is returned
             if 'content-length' in response.headers and int(response.headers['content-length']) == 0:
                 result = None

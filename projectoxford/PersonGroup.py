@@ -2,7 +2,7 @@ import time
 
 from .Base import Base
 
-_personGroupUrl = 'https://api.projectoxford.ai/face/v0/persongroups'
+_personGroupUrl = 'https://api.projectoxford.ai/face/v1.0/persongroups'
 
 
 class PersonGroup(Base):
@@ -83,6 +83,15 @@ class PersonGroup(Base):
                             _personGroupUrl + '/' + personGroupId + '/training',
                             headers={'Ocp-Apim-Subscription-Key': self.key})
 
+    def list(self):
+            """Lists all person groups in the current subscription.
+
+            Returns:
+                object. The resulting JSON
+            """
+            return self._invoke('get', _personGroupUrl, headers={'Ocp-Apim-Subscription-Key': self.key})
+
+
     def trainingStart(self, personGroupId):
         """Starts a person group training.
         Training is a necessary preparation process of a person group before identification.
@@ -97,7 +106,7 @@ class PersonGroup(Base):
         """
 
         return self._invoke('post',
-                            _personGroupUrl + '/' + personGroupId + '/training',
+                            _personGroupUrl + '/' + personGroupId + '/train',
                             headers={'Ocp-Apim-Subscription-Key': self.key})
 
     def update(self, personGroupId, name, userData=None):
@@ -124,24 +133,6 @@ class PersonGroup(Base):
                             json=body,
                             headers={'Ocp-Apim-Subscription-Key': self.key})
 
-    def createOrUpdate(self, personGroupId, name, userData=None):
-        """Creates or updates a person group with a user-specified ID.
-        A person group is one of the most important parameters for the Identification API.
-        The Identification searches person faces in a specified person group.
-
-        Args:
-            personGroupId (str). Numbers, en-us letters in lower case, '-', '_'. Max length: 64
-            name (str). Person group display name. The maximum length is 128.
-            userData (str). User-provided data attached to the group. The size limit is 16KB.
-
-        Returns:
-            object. The resulting JSON
-        """
-        if self.get(personGroupId) is None:
-            return self.create(personGroupId, name, userData)
-        else:
-            return self.update(personGroupId, name, userData)
-
     def trainAndPollForCompletion(self, personGroupId, timeoutSeconds=30):
         """Starts a person group training and polls until the status is not 'running'
 
@@ -153,7 +144,8 @@ class PersonGroup(Base):
         """
         timeout = 0
         status = self.trainingStart(personGroupId)
-        while status['status'] == 'running':
+          
+        while status is None or status['status'] not in ['succeeded', 'failed']:
             time.sleep(1)
             status = self.trainingStatus(personGroupId)
             timeout += 1
@@ -162,11 +154,3 @@ class PersonGroup(Base):
                 raise Exception('training timed out after {0} seconds, last known status: {1}'.format(timeoutSeconds, status))
 
         return status
-
-    def list(self):
-        """Lists all person groups in the current subscription.
-
-        Returns:
-            object. The resulting JSON
-        """
-        return self._invoke('get', _personGroupUrl, headers={'Ocp-Apim-Subscription-Key': self.key})
