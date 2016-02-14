@@ -9,9 +9,7 @@ rootDirectory = os.path.dirname(os.path.realpath('__file__'))
 if rootDirectory not in sys.path:
     sys.path.append(os.path.join(rootDirectory, '..'))
 
-from test import test_support
-from oxford.Client import Client
-from oxford.Emotion import Emotion
+from oxford import Emotion
 
 
 class TestEmotion(unittest.TestCase):
@@ -20,7 +18,7 @@ class TestEmotion(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         # set up self.client for tests
-        cls.client = Client.emotion(os.environ['OXFORD_EMOTION_API_KEY'])
+        cls.client = Emotion(os.environ['OXFORD_EMOTION_API_KEY'])
 
         cls.localFilePrefix = os.path.join(rootDirectory, 'tests', 'images')
 

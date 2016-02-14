@@ -20,17 +20,14 @@ Usage
 	
 	**Note**: before you can send data to you will need an API key. There is are separate API keys for face and vision.
 
-**Initialize a client**
-
-.. code:: python
-
-    from oxford import Client
-    client = Client('<api_key>')
 
 **Face detection**
 
 .. code:: python
 
+    from oxford import Face
+    
+    client = Face('<api_key>')
     result = client.face.detect({'url': 'https://upload.wikimedia.org/wikipedia/commons/1/19/Bill_Gates_June_2015.jpg'})
     print result['faceId']
     print result['attributes']['age']

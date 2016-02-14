@@ -8,7 +8,7 @@ import argparse
 import numpy as np
 import cv2
 
-from oxford import Client
+from oxford import Face
 
 parser = argparse.ArgumentParser()
 parser.add_argument('--image', required=True, help='Image to interact with.')
@@ -20,14 +20,14 @@ window_name = 'Oxford Demo'
 img = None
 faces = []
 
-client = Client.Client()
+client = Face(args.apikey)
 
-face_lists = client.face(args.apikey).faceList.list()
+face_lists = client.faceList.list()
 
 face_list_id = face_lists[0]['faceListId']
 print "Face List: %s" % face_list_id
 
-face_list = client.face(args.apikey).faceList.get(face_list_id)
+face_list = client.faceList.get(face_list_id)
 print "Number of Faces: %d" % len(face_list['persistedFaces'])
 
 def find_face(x,y):
@@ -47,7 +47,7 @@ def pick(event, x, y, flags, param):
         face = find_face(x,y)
         print "Face found: %s" % face['faceId']
         try:
-            similar = client.face(args.apikey).similar(face['faceId'], candidateFaceListId=face_list_id)
+            similar = client.similar(face['faceId'], candidateFaceListId=face_list_id)
             print similar
         except Exception as e:
             if 'FaceNotFound' in e.message:
@@ -56,7 +56,7 @@ def pick(event, x, y, flags, param):
         cv2.imshow(window_name, img)
              
 try:
-    faces = client.face(args.apikey).detect({'path': args.image})
+    faces = client.detect({'path': args.image})
 except Exception as e:
     print e
     print "Error finding face in image (%s)." % args.image

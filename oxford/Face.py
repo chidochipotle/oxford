@@ -1,7 +1,7 @@
-from .Base import Base
-from .Person import Person
-from .PersonGroup import PersonGroup
-from .FaceList import FaceList
+from .base import Base
+from .person import Person
+from .persongroup import PersonGroup
+from .facelist import FaceList
 
 _detectUrl = 'https://api.projectoxford.ai/face/v1.0/detect'
 _similarUrl = 'https://api.projectoxford.ai/face/v1.0/findsimilars'

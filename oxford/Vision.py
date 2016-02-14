@@ -1,6 +1,6 @@
 import re
 
-from .Base import Base
+from .base import Base
 
 _analyzeUrl = 'https://api.projectoxford.ai/vision/v1/analyses'
 _thumbnailUrl = 'https://api.projectoxford.ai/vision/v1/thumbnails'

@@ -1,6 +1,6 @@
 import time
 
-from .Base import Base
+from .base import Base
 
 _personGroupUrl = 'https://api.projectoxford.ai/face/v1.0/persongroups'
 

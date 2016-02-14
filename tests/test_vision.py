@@ -7,7 +7,7 @@ rootDirectory = os.path.dirname(os.path.realpath('__file__'))
 if rootDirectory not in sys.path:
     sys.path.append(os.path.join(rootDirectory, '..'))
 
-from oxford.Client import Client
+from oxford import Vision
 
 class TestFace(unittest.TestCase):
     '''Tests the project oxford face API self.client'''
@@ -15,7 +15,7 @@ class TestFace(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         # set up self.client for tests
-        cls.client = Client.vision(os.environ['OXFORD_VISION_API_KEY'])
+        cls.client = Vision(os.environ['OXFORD_VISION_API_KEY'])
         cls.localFilePrefix = os.path.join(rootDirectory, 'tests', 'images')
         cls.analyzeOptions = {
             'ImageType': True,

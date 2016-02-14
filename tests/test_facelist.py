@@ -10,7 +10,7 @@ if rootDirectory not in sys.path:
     sys.path.append(os.path.join(rootDirectory, '..'))
 
 from test import test_support
-from oxford.Client import Client
+from oxford import Face
 
 class TestFaceList(unittest.TestCase):
     '''Tests the project oxford API client'''
@@ -18,7 +18,7 @@ class TestFaceList(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         # set up self.client for tests
-        cls.client = Client.face(os.environ['OXFORD_FACE_API_KEY'])
+        cls.client = Face(os.environ['OXFORD_FACE_API_KEY'])
 
         # detect two faces
         cls.knownFaceIds = [];

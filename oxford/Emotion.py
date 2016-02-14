@@ -1,4 +1,4 @@
-from .Base import Base
+from .base import Base
 
 _emotionRecognizeUrl = 'https://api.projectoxford.ai/emotion/v1.0/recognize'
 
