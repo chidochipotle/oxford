@@ -10,7 +10,7 @@ if rootDirectory not in sys.path:
     sys.path.append(os.path.join(rootDirectory, '..'))
 
 from test import test_support
-from oxford import Face
+from oxford.face import Face
 
 class TestFace(unittest.TestCase):
     '''Tests the project oxford face API self.client'''

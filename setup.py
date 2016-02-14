@@ -20,8 +20,8 @@ setup(
     long_description=long_description,
 
     # The project's main homepage.
-    url='https://github.com/scsouthw/project-oxford-python',
-    download_url='https://github.com/scsouthw/project-oxford-python',
+    url='https://github.com/irjudson/oxford',
+    download_url='https://github.com/irjudson/oxford',
 
     # Author details
     author='Ivan R. Judson',

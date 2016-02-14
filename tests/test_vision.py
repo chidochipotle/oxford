@@ -7,7 +7,8 @@ rootDirectory = os.path.dirname(os.path.realpath('__file__'))
 if rootDirectory not in sys.path:
     sys.path.append(os.path.join(rootDirectory, '..'))
 
-from oxford import Vision
+from test import test_support
+from oxford.vision import Vision
 
 class TestFace(unittest.TestCase):
     '''Tests the project oxford face API self.client'''
