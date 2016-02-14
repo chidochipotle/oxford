@@ -66,8 +66,6 @@ class TestPersonGroup(unittest.TestCase):
         result = self.client.personGroup.trainingStatus(personGroupId)
         while result is None:
             result = self.client.personGroup.trainingStatus(personGroupId)
-        self.assertEqual(result['status'], 'running')
-
         countDown = 10
         while countDown > 0 and result['status'] == 'running':
             result = self.client.personGroup.trainingStatus(personGroupId)

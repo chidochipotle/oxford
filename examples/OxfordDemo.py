@@ -11,7 +11,7 @@ import cv2
 from oxford import Client
 
 parser = argparse.ArgumentParser()
-parser.add_argument('--image', help='Image to interact with.')
+parser.add_argument('--image', required=True, help='Image to interact with.')
 parser.add_argument('--apikey', help='Face API license key')
 
 args = parser.parse_args()
@@ -20,7 +20,7 @@ window_name = 'Oxford Demo'
 img = None
 faces = []
 
-client = Client.Client(args.apikey)
+client = Client.Client()
 
 face_lists = client.face(args.apikey).faceList.list()
 
