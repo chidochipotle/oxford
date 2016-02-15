@@ -5,7 +5,7 @@ import uuid
 
 rootDirectory = os.path.dirname(os.path.realpath('__file__'))
 if rootDirectory not in sys.path:
-    sys.path.append(rootDirectory)
+    sys.path.insert(0, rootDirectory)
 
 from oxford.person import Person
 from oxford.face import Face

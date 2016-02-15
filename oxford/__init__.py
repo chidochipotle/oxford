@@ -1,1 +1,1 @@
-__ALL__ = ['emotion', 'face', 'person', 'persongroup', 'vision']
+__ALL__ = ['emotion', 'face', 'facelist', 'person', 'persongroup', 'vision']
