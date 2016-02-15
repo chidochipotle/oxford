@@ -12,7 +12,7 @@ from oxford.persongroup import PersonGroup
 from oxford.face import Face
 
 class TestPersonGroup(unittest.TestCase):
-    '''Tests the project oxford API client'''
+    '''Tests the Project Oxford Face API'''
 
     @classmethod
     def setUpClass(cls):
