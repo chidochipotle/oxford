@@ -7,7 +7,7 @@ import copy
 
 rootDirectory = os.path.dirname(os.path.realpath('__file__'))
 if rootDirectory not in sys.path:
-    sys.path.append(os.path.join(rootDirectory, '..'))
+    sys.path.append(rootDirectory)
 
 from oxford.face import Face
 
