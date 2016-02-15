@@ -8,7 +8,6 @@ rootDirectory = os.path.dirname(os.path.realpath('__file__'))
 if rootDirectory not in sys.path:
     sys.path.append(os.path.join(rootDirectory, '..'))
 
-from test import test_support
 from oxford.persongroup import PersonGroup
 from oxford.face import Face
 
