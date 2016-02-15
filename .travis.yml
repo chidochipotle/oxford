@@ -8,6 +8,5 @@ install:
 before_script:
   - flake8 --ignore="E501,E225" oxford
 script:
-  - {envpython} setup.py develop
   - {envpython} setup.py test
  
