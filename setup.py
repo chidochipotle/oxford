@@ -61,5 +61,8 @@ setup(
     # simple. Or you can use find_packages().
     packages=find_packages(exclude=['contrib', 'docs', 'tests*']),
 
+    setup_requires=['pytest-runner'],
+    tests_require=['pytest'],
+    
     test_suite='tests'
 )
