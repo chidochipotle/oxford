@@ -5,18 +5,9 @@ import sys
 import unittest
 import uuid
 
-print os.getcwd()
-print sys.path
-
 rootDirectory = os.path.dirname(os.path.dirname(os.path.realpath(__file__)))
 if rootDirectory not in sys.path:
     sys.path.insert(0, rootDirectory)
-
-print "-----"
-print os.listdir(rootDirectory)
-print "-----"
-print os.listdir(os.path.join(rootDirectory, "oxford"))
-import oxford
 
 from oxford.emotion import Emotion
 
