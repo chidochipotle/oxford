@@ -12,6 +12,8 @@ rootDirectory = os.path.dirname(os.path.dirname(os.path.realpath(__file__)))
 if rootDirectory not in sys.path:
     sys.path.insert(0, rootDirectory)
 
+import oxford
+
 from oxford.emotion import Emotion
 
 class TestEmotion(unittest.TestCase):
