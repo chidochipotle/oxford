@@ -8,5 +8,5 @@ install:
 before_script:
   - flake8 --ignore="E501,E225" oxford
 script:
-  - python -m unittest discover
+  - python setup.py test
  

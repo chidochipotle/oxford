@@ -5,7 +5,7 @@ import unittest
 import time
 import uuid
 
-rootDirectory = os.path.dirname(os.path.realpath('__file__'))
+rootDirectory = os.path.dirname(os.path.dirname(os.path.realpath(__file__)))
 if rootDirectory not in sys.path:
     sys.path.insert(0, rootDirectory)
 
