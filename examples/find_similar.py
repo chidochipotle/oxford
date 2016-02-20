@@ -5,8 +5,9 @@ from os.path import abspath, dirname
 sys.path.append(dirname(dirname(abspath(__file__))))
 
 import argparse
+import json
 
-from oxford import Face
+from oxford.face import Face
 
 parser = argparse.ArgumentParser()
 parser.add_argument('--image', help='Image to interact with.')
@@ -33,7 +34,9 @@ try:
 
     similar = client.similar(face['faceId'], candidateFaceListId=args.facelistid)
     for possible_face in similar:
+        
         print "Found Similar Face: %s Confidence: %f" % (possible_face['persistedFaceId'], possible_face['confidence'])
-
+        face_data = [x for x in face_list['persistedFaces'] if x['persistedFaceId'] == possible_face['persistedFaceId']]
+        print json.dumps(json.loads(face_data[0]['userData']), sort_keys=True, indent=4, separators=(',', ': '))
 except Exception as e:
     print e
