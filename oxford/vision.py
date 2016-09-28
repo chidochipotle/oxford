@@ -2,8 +2,8 @@ import re
 
 from .base import Base
 
-_analyzeUrl = 'https://api.projectoxford.ai/vision/v1.0/analyses'
-_thumbnailUrl = 'https://api.projectoxford.ai/vision/v1.0/thumbnails'
+_analyzeUrl = 'https://api.projectoxford.ai/vision/v1.0/analyze'
+_thumbnailUrl = 'https://api.projectoxford.ai/vision/v1.0/generateThumbnail'
 _ocrUrl = 'https://api.projectoxford.ai/vision/v1.0/ocr'
 
 
