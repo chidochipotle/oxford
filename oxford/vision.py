@@ -33,17 +33,25 @@ class Vision(Base):
             options.Faces (boolean). The Detects if faces are present. If present, generate coordinates, gender and age.
             options.Adult (boolean). The Detects if image is pornographic in nature (nudity or sex act). Sexually suggestive content is also detected.
             options.Categories (boolean). The Image categorization; taxonomy defined in documentation.
+            options.Tags (boolean). The Image tags; taxonomy defined in documentation.
+            options.Description (boolean). The Image description; taxonomy defined in documentation.
+
 
         Returns:
             object. The resulting JSON
         """
         flags = []
         for option in options:
-            match = re.match(r'(ImageType)|(Color)|(Faces)|(Adult)|(Categories)', option)
+            match = re.match(r'(ImageType)|(Color)|(Faces)|(Adult)|(Categories)|(Tags)|(Description)', option)
             if match and options[option]:
                 flags.append(option)
 
         params = {'visualFeatures': ','.join(flags)} if flags else {}
+
+        match_celebrities = re.match(r'(Celebrities)', option)
+        if match_celebrities:
+             params['details'] = 'Celebrities'
+
         return Base._postWithOptions(self, _analyzeUrl, options, params)
 
     def thumbnail(self, options):
