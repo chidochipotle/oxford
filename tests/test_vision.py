@@ -22,7 +22,10 @@ class TestFace(unittest.TestCase):
             'Color': True,
             'Faces': True,
             'Adult': True,
-            'Categories': True
+            'Categories': True,
+            'Tags': True,
+            'Description': True,
+            'Celebrities': True,
         }
 
         cls.thumbnailOptions = {

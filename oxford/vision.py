@@ -41,16 +41,15 @@ class Vision(Base):
             object. The resulting JSON
         """
         flags = []
+        params = {}
         for option in options:
-            match = re.match(r'(ImageType)|(Color)|(Faces)|(Adult)|(Categories)|(Tags)|(Description)', option)
-            if match and options[option]:
-                flags.append(option)
-
-        params = {'visualFeatures': ','.join(flags)} if flags else {}
-
-        match_celebrities = re.match(r'(Celebrities)', option)
-        if match_celebrities:
+            if re.match(r'(Celebrities)', option):
              params['details'] = 'Celebrities'
+            elif re.match(r'(ImageType)|(Color)|(Faces)|(Adult)|(Categories)|(Tags)|(Description)', option):
+                if options[option]:
+                    flags.append(option)
+        if flags:
+            params['visualFeatures'] = ','.join(flags)
 
         return Base._postWithOptions(self, _analyzeUrl, options, params)
 
