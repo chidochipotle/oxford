@@ -4,6 +4,7 @@
 class FaceRectangle(dict):
 
     def __init__(self, rectangle={}):
+        super(FaceRectangle, self).__init__()
         self["width"] = rectangle.get("width", None)
         self["height"] = rectangle.get("height", None)
         self["left"] = rectangle.get("left", None)

@@ -6,6 +6,7 @@ from collections import OrderedDict
 
 class EmotionModel(OrderedDict):
     def __init__(self, result):
+        super(EmotionModel, self).__init__()
         if result:
             try:
                 self["face_rectangle"] = FaceRectangle(result['faceRectangle'])
@@ -26,6 +27,7 @@ class EmotionModel(OrderedDict):
 class Scores(OrderedDict):
 
     def __init__(self, scores):
+        super(Scores, self).__init__()
         self.anger = scores.get(scores["anger"], None)
         self.contempt = scores.get(scores["contempt"], None)
         self.disgust = scores.get(scores["disgust"], None)
