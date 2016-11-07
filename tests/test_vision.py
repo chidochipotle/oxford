@@ -1,6 +1,7 @@
 import copy
 import os
 import sys
+import time
 import unittest
 
 rootDirectory = os.path.dirname(os.path.dirname(os.path.realpath(__file__)))
@@ -122,3 +123,7 @@ class TestFace(unittest.TestCase):
             result = self.client.ocr(options)
         
         self._verify_ocr_result(result)
+
+    @classmethod
+    def TearDownUpClass(cls):
+        time.sleep(0.5)  # sleep time in seconds

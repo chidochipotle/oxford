@@ -3,6 +3,7 @@
 import copy
 import os
 import sys
+import time
 import unittest
 
 
@@ -59,3 +60,7 @@ class TestFaceModel(unittest.TestCase):
         options['path'] = os.path.join(self.localFilePrefix, 'face1.jpg')
         detectResult = self.client.detect(options)
         self._verifyDetect(detectResult)
+
+    @classmethod
+    def TearDownUpClass(cls):
+        time.sleep(0.5)  # sleep time in seconds

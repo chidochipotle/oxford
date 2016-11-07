@@ -3,6 +3,7 @@
 import copy
 import os
 import sys
+import time
 import unittest
 
 rootDirectory = os.path.dirname(os.path.dirname(os.path.realpath(__file__)))
@@ -42,3 +43,7 @@ class TestEmotionModel(unittest.TestCase):
         options['path'] = os.path.join(self.localFilePrefix, 'face1.jpg')
         recognizeResult = self.client.recognize(options)
         self._verifyRecognize(recognizeResult)
+
+    @classmethod
+    def TearDownUpClass(cls):
+        time.sleep(0.5)  # sleep time in seconds

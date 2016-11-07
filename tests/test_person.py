@@ -1,6 +1,7 @@
 import os
 import sys
 import unittest
+import time
 import uuid
 
 rootDirectory = os.path.dirname(os.path.dirname(os.path.realpath(__file__)))
@@ -87,3 +88,7 @@ class TestPerson(unittest.TestCase):
         # remove them
         for person in listResult:
             self.client.person.delete(self.personGroupId, person['personId'])
+
+    @classmethod
+    def TearDownUpClass(cls):
+        time.sleep(0.5)  # sleep time in seconds

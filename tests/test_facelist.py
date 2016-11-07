@@ -1,6 +1,7 @@
 import inspect
 import os
 import sys
+import time
 import unittest
 import uuid
 import copy
@@ -76,3 +77,7 @@ class TestFaceList(unittest.TestCase):
         persistedFaceId = result['persistedFaceId']
         result = self.client.faceList.deleteFace(faceListId, persistedFaceId)
         self.assertIsNone(result)
+
+    @classmethod
+    def TearDownUpClass(cls):
+        time.sleep(0.5)  # sleep time in seconds

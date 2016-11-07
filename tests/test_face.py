@@ -119,7 +119,7 @@ class TestFace(unittest.TestCase):
         try:
             self.client.personGroup.create(group_id, group_name)
         except Exception as e:
-            if "PersonGroupExists" not in e: 
+            if "PersonGroupExists" not in e:
                 self.assertRaises(Exception, "Error creating persongroup", {})
         faceId = self.client.detect({'path': fpath})[0]['faceId']
         person_id = self.client.person.create(group_id, 'billG')['personId']
@@ -136,3 +136,7 @@ class TestFace(unittest.TestCase):
         self.assertIsInstance(identifyResult, object, 'identify result is returned')
         self.assertEqual(identifyResult[0]['candidates'][0]['personId'], person_id)
         self.client.personGroup.delete(group_id)
+
+    @classmethod
+    def TearDownUpClass(cls):
+        time.sleep(0.5)  # sleep time in seconds

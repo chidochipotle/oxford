@@ -81,3 +81,7 @@ class TestPersonGroup(unittest.TestCase):
         result = self.client.personGroup.trainAndPollForCompletion(personGroupId)
         self.assertNotEqual(result['status'], 'running')
         self.client.personGroup.delete(personGroupId)
+
+    @classmethod
+    def TearDownUpClass(cls):
+        time.sleep(0.5)  # sleep time in seconds
