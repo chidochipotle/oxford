@@ -1,7 +1,11 @@
 # Copyright (c) 2016 Daniel Kornhauser under The MIT License (MIT)
 
-class HeadPose(dict):
+from collections import OrderedDict
+
+
+class HeadPose(OrderedDict):
     def __init__(self, pose={}):
+        super(HeadPose, self).__init__()
         self["roll"] = pose.get("roll", None)
         self["yaw"] = pose.get("yaw", None)
         self["pitch"] = pose.get("pitch", None)
@@ -33,6 +37,7 @@ class HeadPose(dict):
 
 class FacialHair(dict):
     def __init__(self, hair = {}):
+        super(FacialHair, self).__init__()
         self["beard"] = hair.get("beard", None)
         self["moustache"] = hair.get("moustache", None)
         self["sideburns"] = hair.get("sideburns", None)
@@ -71,6 +76,7 @@ class FacialHair(dict):
 
 class FaceAttributes(dict):
     def __init__(self, attributes={}):
+        super(FaceAttributes, self).__init__()
         self["age"] = attributes.get('age', None)
         self["gender"] = attributes.get('gender', None)
         self["head_pose"] = HeadPose(attributes.get('headPose', {}))

@@ -10,6 +10,7 @@ import traceback
 
 class FaceModel(OrderedDict):
     def __init__(self, result):
+        super(FaceModel, self).__init__()
         if result:
             try:
                 self["face_id"] = result['faceId']

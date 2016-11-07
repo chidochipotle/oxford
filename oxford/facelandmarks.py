@@ -6,6 +6,8 @@ from .featurecoordinate import FeatureCoordinate
 class FaceLandmarks(dict):
 
     def __init__(self, features={}):
+        super(FaceLandmarks, self).__init__()
+
         self['eyeLeftInner'] = FeatureCoordinate(features.get('eyeLeftInner', {}))
         self['eyeLeftOuter'] = FeatureCoordinate(features.get('eyeLeftOuter', {}))
         self['eyeLeftTop'] = FeatureCoordinate(features.get('eyeLeftTop', {}))

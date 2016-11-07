@@ -5,6 +5,7 @@ from collections import OrderedDict
 
 class AnalysisResults(OrderedDict):
     def __init__(self, result):
+        super(AnalysisResults, self).__init__()
         if result:
             try:
                 self["request_id"] = result.get("requestId", None)
@@ -95,6 +96,7 @@ class AnalysisResults(OrderedDict):
 class Metadata(OrderedDict):
 
     def __init__(self, metadata={}):
+        super(Metadata, self).__init__()
         self["width"] = metadata.get("width", None)
         self["height"] = metadata.get("height", None)
         self["format"] = metadata.get("format", None)
@@ -127,6 +129,7 @@ class Metadata(OrderedDict):
 class ImageType(OrderedDict):
 
     def __init__(self, image_type={}):
+        super(ImageType, self).__init__()
         self["clip_art_type"] = image_type.get("clipArtType", None)
         self["line_drawing_type"] = image_type.get("lineDrawingType", None)
 
@@ -150,6 +153,7 @@ class ImageType(OrderedDict):
 class Color(OrderedDict):
 
     def __init__(self, color={}):
+        super(Color, self).__init__()
         self["accent_color"] = color.get("accentColor", None)
         self["dominant_color_foreground"] = color.get("dominantColorForeground", None)
         self["dominant_color_background"] = color.get("dominantColorBackground", None)
@@ -200,6 +204,7 @@ class Color(OrderedDict):
 class Adult(OrderedDict):
 
     def __init__(self, adult={}):
+        super(Adult, self).__init__()
         self["is_adult_content"] = adult.get("isAdultContent", None)
         self["is_racy_content"] = adult.get("isRacyContent", None)
         self["adult_score"] = adult.get("adultScore", None)
@@ -238,9 +243,10 @@ class Adult(OrderedDict):
         self["racy_score"] = value
 
 
-class Rectangle(dict):
+class Rectangle(OrderedDict):
 
     def __init__(self, rectangle={}):
+        super(Rectangle, self).__init__()
         self["width"] = rectangle.get("width", None)
         self["height"] = rectangle.get("height", None)
         self["left"] = rectangle.get("left", None)
@@ -282,6 +288,7 @@ class Rectangle(dict):
 class Face(OrderedDict):
 
     def __init__(self, face={}):
+        super(Face, self).__init__()
         self["age"] = face.get("age", None)
         self["gender"] = face.get("gender", None)
         self["face_rectangle"] = Rectangle(face['faceRectangle'])
@@ -321,6 +328,7 @@ class Faces(list):
 class Tag(OrderedDict):
 
     def __init__(self, tag={}):
+        super(Tag, self).__init__()
         self["name"] = tag.get("name", None)
         self["confidence"] = tag.get("confidence", None)
         self["hint"] = tag.get("hint", None)
@@ -367,6 +375,7 @@ class Captions(list):
 class Caption(OrderedDict):
 
     def __init__(self, description={}):
+        super(Caption, self).__init__()
         self["text"] = description.get(description.get("text", []), None)
         self["confidence"] = description.get(description.get("confidence", []), None)
 
@@ -390,6 +399,7 @@ class Caption(OrderedDict):
 class Description(OrderedDict):
 
     def __init__(self, description={}):
+        super(Description, self).__init__()
         self["tags"] = Tags(description.get("tags", []))
         self["captions"] = Captions(description.get("captions", []))
 
@@ -412,6 +422,7 @@ class Description(OrderedDict):
 
 class NameScorePair(OrderedDict):
     def __init__(self, name_score_pair={}):
+        super(NameScorePair, self).__init__()
         self["name"] = name_score_pair.get("name", None)
         self["score"] = name_score_pair.get("score", None)
 

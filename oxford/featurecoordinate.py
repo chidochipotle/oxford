@@ -2,6 +2,7 @@
 
 class FeatureCoordinate(dict):
     def __init__(self, coordinate={}):
+        super(FeatureCoordinate, self).__init__()
         self["x"] = coordinate.get("x", None)
         self["y"] = coordinate.get("y", None)
 
